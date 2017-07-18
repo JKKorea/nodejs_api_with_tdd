@@ -61,5 +61,24 @@ describe('GET /users/1는', ()=>{
                 .end(done);
         });
     });
+});
 
+describe('GET /users/1는', ()=>{
+    describe('성공시 ' ,()=> {
+        it('204를 응답한다.', (done)=>{
+            request(app)
+                .delete('/users/1')
+                .expect(204)
+                .end(done);
+        });
+    });
+    
+    describe('실패시 ' ,()=> {
+        it('id가 숫자가 아닐경우 400으로 응답한다.', (done)=>{
+            request(app)
+                .delete('/users/one')
+                .expect(400)
+                .end(done);
+        });
+    });
 });
