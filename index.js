@@ -47,11 +47,21 @@ app.post('/users', (req, res) => {
 	const isConfilict = users.filter(user => user.name === name).length
 	if (isConfilict) return res.status(409).end();
 
-	const id = Data.now();
+	const id = Date.now();
 	const user = {id, name};
 
 	users.push(user);
 	res.status(201).json(user);
+});
+
+app.put('/users/:id', (req, res) => {
+	const id = parseInt(req.params.id, 10);
+	const name = req.body.name;
+
+	const user = users.filter(user => user.id === id)[0];
+	user.name = name;
+
+	res.json(user);
 });
 
 app.listen(3000, ()=>{
