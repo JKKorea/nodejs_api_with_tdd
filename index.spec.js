@@ -108,7 +108,7 @@ describe('POST /users', ()=>{
     });
 
     describe('실패시', ()=> {
-        it('name 파라매터 누락시 400을 반환한다.', ()=>{
+        it('name 파라매터 누락시 400을 반환한다.', (done)=>{
             request(app)
                 .post('/users')
                 .send({})
@@ -122,6 +122,21 @@ describe('POST /users', ()=>{
                 .send({name: 'daniel'})
                 .expect(409)
                 .end(done)
-        });
-    });
+        })
+    })
 });
+
+describe('PUT /users/:id', ()=>{
+    describe('성공시', ()=>{
+        it('변경된 name을 응답한다', (done)=>{
+            const name = 'chally';
+            request(app)
+                .put('/users/3')
+                .send({name})
+                .end((err, res) => {
+                    res.body.should.have.property('name', name);
+                    done();
+                });
+        })
+    })
+})
